@@ -19,12 +19,15 @@ import {
   PUT_IDEA_DONE,
   DELETE_IDEA,
   DELETE_IDEA_DONE,
+  POST_IDEA,
+  POST_IDEA_DONE,
 } from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
   ideas: [],
   loading: false,
+  action: '',
 });
 
 function homeReducer(state = initialState, action) {
@@ -32,24 +35,41 @@ function homeReducer(state = initialState, action) {
     case GET_IDEAS:
       return state
         .set('loading', true)
+        .set('action', '')
         .set('error', false);
     case GET_IDEAS_DONE:
       return state
         .set('loading', false)
+        .set('action', 'loaded')
         .set('ideas', action.ideas);
     case PUT_IDEA:
       return state
         .set('loading', true)
+        .set('action', '')
         .set('error', false);
     case PUT_IDEA_DONE:
       return state
-        .set('loading', false);
+        .set('loading', false)
+        .set('action', 'modified');
     case DELETE_IDEA:
       return state
         .set('loading', true)
+        .set('action', '')
         .set('error', false);
     case DELETE_IDEA_DONE:
       return state
+        .set('ideas', state.get('ideas').filter((idea) => idea.id !== action.deleted.id))
+        .set('action', 'deleted')
+        .set('loading', false);
+    case POST_IDEA:
+      return state
+        .set('loading', true)
+        .set('action', '')
+        .set('error', false);
+    case POST_IDEA_DONE:
+      return state
+        .update('ideas', (ideas) => ideas.concat(action.newIdea))
+        .set('action', 'new')
         .set('loading', false);
     case IDEAS_ERROR:
       return state

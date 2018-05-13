@@ -7,6 +7,7 @@ import Wrapper from './Wrapper';
 import Title from './Title';
 import Body from './Body';
 import Delete from './Delete';
+import Counter from './Counter';
 
 class IdeaItem extends React.Component {
   constructor(props) {
@@ -14,17 +15,21 @@ class IdeaItem extends React.Component {
 
     this.state = {
       hover: false,
-      data: {},
+      data: props.idea,
     };
 
     this.handleBlur = this.handleBlur.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.checkBody = this.checkBody.bind(this);
   }
 
-  componentWillMount() {
-    const { idea } = this.props;
-
-    this.setState({ data: idea });
+  componentDidMount() {
+    const { action } = this.props;
+    // console.log(this.title)
+    if (action === 'new') {
+      // focus
+      this.title.focus();
+    }
   }
 
   handleChange(key, value) {
@@ -52,14 +57,22 @@ class IdeaItem extends React.Component {
     });
   }
 
+  checkBody(event) {
+    if (event.target.value.length > 140) {
+      return;
+    }
+    this.handleChange('body', event.target.value);
+  }
+
   render() {
     return (
       <Wrapper onMouseEnter={() => { this.handleOver(true); }} onMouseLeave={() => { this.handleOver(false); }}>
         <Delete visible={this.state.hover} onClick={this.handleDelete}>
           <FontAwesomeIcon icon={faTimes} style={{ height: '32px', width: '32px', padding: '7px', color: '#fff' }} />
         </Delete>
-        <Title value={this.state.data.title} onChange={(event) => this.handleChange('title', event.target.value)} onBlur={this.handleBlur} />
-        <Body value={this.state.data.body} onChange={(event) => this.handleChange('body', event.target.value)} onBlur={this.handleBlur} />
+        <Title innerRef={(title) => { this.title = title; }} placeholder="Title" value={this.state.data.title} onChange={(event) => this.handleChange('title', event.target.value)} onBlur={this.handleBlur} />
+        <Body placeholder="Your text..." value={this.state.data.body} onChange={this.checkBody} onBlur={this.handleBlur} />
+        <Counter count={this.state.data.body ? this.state.data.body.length : 0}>{this.state.data.body ? (140 - this.state.data.body.length) : 0} left</Counter>
       </Wrapper>
     );
   }
@@ -67,6 +80,7 @@ class IdeaItem extends React.Component {
 
 IdeaItem.propTypes = {
   idea: PropTypes.object,
+  action: PropTypes.string,
   saveIdea: PropTypes.any,
   deleteIdea: PropTypes.any,
 };

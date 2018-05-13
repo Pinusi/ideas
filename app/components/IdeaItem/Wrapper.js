@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   margin-top: 10px;
   border: 1px solid #E7EBEB;
   background-color: #fff;
-  padding: 20px;
+  padding: 13px;
   border-right: 5px solid #F88C75;
   -webkit-box-shadow: 2px 2px 7px 0px rgba(231,235,235,1);
   -moz-box-shadow: 2px 2px 7px 0px rgba(231,235,235,1);

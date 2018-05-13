@@ -13,6 +13,7 @@ export const IDEAS_ERROR = 'ideas/Home/IDEAS_ERROR';
 export const GET_IDEAS = 'ideas/Home/GET_IDEAS';
 export const GET_IDEAS_DONE = 'ideas/Home/GET_IDEAS_DONE';
 export const POST_IDEA = 'ideas/Home/POST_IDEA';
+export const POST_IDEA_DONE = 'ideas/Home/POST_IDEA_DONE';
 export const PUT_IDEA = 'ideas/Home/PUT_IDEA';
 export const PUT_IDEA_DONE = 'ideas/Home/PUT_IDEA_DONE';
 export const DELETE_IDEA = 'ideas/Home/DELETE_IDEA';

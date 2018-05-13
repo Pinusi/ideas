@@ -4,21 +4,26 @@
 
 import { createSelector } from 'reselect';
 
-const selectShare = (state) => state.get('home');
+const selectHome = (state) => state.get('home');
 
 const makeSelectLoading = () => createSelector(
-  selectShare,
+  selectHome,
   (globalState) => globalState.get('loading')
 );
 
 const makeSelectError = () => createSelector(
-  selectShare,
+  selectHome,
   (globalState) => globalState.get('error')
 );
 
 const makeSelectIdeas = () => createSelector(
-  selectShare,
+  selectHome,
   (globalState) => globalState.get('ideas')
+);
+
+const makeSelectAction = () => createSelector(
+  selectHome,
+  (globalState) => globalState.get('action')
 );
 
 
@@ -26,4 +31,5 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeSelectIdeas,
+  makeSelectAction,
 };

@@ -20,6 +20,7 @@ import {
   GET_IDEAS,
   GET_IDEAS_DONE,
   POST_IDEA,
+  POST_IDEA_DONE,
   PUT_IDEA,
   PUT_IDEA_DONE,
   DELETE_IDEA,
@@ -70,18 +71,6 @@ export function getIdeasDone(ideas) {
 
 
 /**
- * Post a new idea
- *
- * @return {object}    An action object with a type of POST_IDEA
- */
-export function postIdea() {
-  return {
-    type: POST_IDEA,
-  };
-}
-
-
-/**
  * Put an idea
  *
  * @param  {payload} payload The new idea data to be stored
@@ -126,10 +115,40 @@ export function deleteIdea(id) {
 /**
  * Put an idea
  *
+ * @param  {deleted} object with id of the idea deleted
+ *
  * @return {object}    An action object with a type of PUT_IDEA_DONE
  */
-export function deleteIdeaDone() {
+export function deleteIdeaDone(deleted) {
   return {
     type: DELETE_IDEA_DONE,
+    deleted,
+  };
+}
+
+
+/**
+ * Post an idea
+ *
+ * @return {object}    An action object with a type of POST_IDEA
+ */
+export function postIdea() {
+  return {
+    type: POST_IDEA,
+  };
+}
+
+
+/**
+ * Put an idea
+ *
+ * @param  {newIdea} object with id and creation date of the new idea
+ *
+ * @return {object}    An action object with a type of POST_IDEA_DONE
+ */
+export function postIdeaDone(newIdea) {
+  return {
+    type: POST_IDEA_DONE,
+    newIdea,
   };
 }

@@ -1,15 +1,10 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  padding-left: 10px;
-  padding-bottom: 10px;
-  justify-content: space-around;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex: 1 0 auto;
-  align-content: flex-start;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
 `;
 
 export default Wrapper;
