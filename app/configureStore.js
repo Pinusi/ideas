@@ -3,18 +3,14 @@
  */
 
 import { createStore, applyMiddleware, compose } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
 import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
+import { loadState, saveState } from './localStorage';
 
 const sagaMiddleware = createSagaMiddleware();
-const persistConfig = {
-  key: 'root',
-  storage,
-}
+const persistedState = loadState();
 
 export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
@@ -46,9 +42,13 @@ export default function configureStore(initialState = {}, history) {
   const store = createStore(
     createReducer(),
     fromJS(initialState),
-    composeEnhancers(...enhancers)
+    composeEnhancers(...enhancers),
+    // fromJS(persistedState),
   );
 
+  store.subscribe(() => {
+    saveState(store.getState().toJS());
+  });
   // Extensions
   store.runSaga = sagaMiddleware.run;
   store.injectedReducers = {}; // Reducer registry
