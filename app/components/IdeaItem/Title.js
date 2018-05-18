@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 const Title = styled.input`
-  font-size: 25px;
-  font-family: 'Source Sans Pro', sans-serif;
-  resize: none;
+  font-size: 14px;
+  font-weight: 600;
 
   &:focus{
     border: solid 1px grey;

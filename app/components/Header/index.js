@@ -1,14 +1,21 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import Wrapper from './Wrapper';
+import Houses from './Houses';
+import Logo from './Logo';
 
-import messages from './messages';
+import planet from '../../images/planet.png';
 
 function Header() { // eslint-disable-line react/prefer-stateless-function
   return (
     <Wrapper>
-      <FormattedMessage {...messages.title} />
+      <Logo>
+        <div>
+          <img alt="Ideas" src={planet} />
+        </div>
+        <span>ideas</span>
+      </Logo>
+      <Houses></Houses>
     </Wrapper>
   );
 }

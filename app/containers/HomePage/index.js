@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faPlus from '@fortawesome/fontawesome-free-solid/faPlus';
+import faPlusCircle from '@fortawesome/fontawesome-free-solid/faPlusCircle';
 
 import NotificationCenter from 'components/NotificationCenter';
 import IdeaItem from 'components/IdeaItem';
@@ -68,6 +68,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     return (
       <Wrapper>
+        <Add onClick={this.addIdea}>
+          <FontAwesomeIcon className="icon" icon={faPlusCircle} />
+        </Add>
         <NotificationCenter loadingData={loading} action={action} />
         <Ideas>
           {
@@ -76,9 +79,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             )
           }
         </Ideas>
-        <Add onClick={this.addIdea}>
-          <FontAwesomeIcon icon={faPlus} style={{ height: '60px', width: '60px', padding: '15px', color: '#fff' }} />
-        </Add>
       </Wrapper>
     );
   }

@@ -2,8 +2,7 @@ import { injectGlobal } from 'styled-components';
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
-  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
-  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900');
+  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900');
 
   html,
   body {
@@ -12,7 +11,7 @@ injectGlobal`
   }
 
   body {
-    font-family: 'Source Serif Pro', serif;
+    font-family: 'Source Sans Pro', serif;
   }
 
   #app {
