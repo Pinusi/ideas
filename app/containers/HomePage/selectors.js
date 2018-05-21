@@ -26,10 +26,16 @@ const makeSelectAction = () => createSelector(
   (globalState) => globalState.get('action')
 );
 
+const makeSelectFilter = () => createSelector(
+  selectHome,
+  (globalState) => globalState.get('filter')
+);
+
 
 export {
   makeSelectLoading,
   makeSelectError,
   makeSelectIdeas,
   makeSelectAction,
+  makeSelectFilter,
 };

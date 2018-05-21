@@ -12,7 +12,7 @@ import { loadState, saveState } from './localStorage';
 const sagaMiddleware = createSagaMiddleware();
 const persistedState = loadState();
 
-export default function configureStore(initialState = {}, history) {
+export default function configureStore(initialState = persistedState, history) {
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
@@ -42,8 +42,8 @@ export default function configureStore(initialState = {}, history) {
   const store = createStore(
     createReducer(),
     fromJS(initialState),
-    composeEnhancers(...enhancers),
     // fromJS(persistedState),
+    composeEnhancers(...enhancers),
   );
 
   store.subscribe(() => {

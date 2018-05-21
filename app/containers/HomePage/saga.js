@@ -4,7 +4,7 @@
 
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { GET_IDEAS, PUT_IDEA, DELETE_IDEA, POST_IDEA } from 'containers/HomePage/constants';
-import { getIdeasDone, ideasError, putIdeaDone, deleteIdeaDone, getIdeas, postIdeaDone } from 'containers/HomePage/actions';
+import { getIdeasDone, ideasError, putIdeaDone, deleteIdeaDone, postIdeaDone } from 'containers/HomePage/actions';
 
 import request from 'utils/request';
 
@@ -32,7 +32,7 @@ export function* putIdeaSaga(action) {
 
   try {
     // Call our request helper (see 'utils/request')
-    yield call(request, requestURL, {
+    let modifiedIdea = yield call(request, requestURL, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -40,7 +40,8 @@ export function* putIdeaSaga(action) {
       },
       body: JSON.stringify(action.payload),
     });
-    yield put(putIdeaDone());
+    modifiedIdea = action.payload; // hack
+    yield put(putIdeaDone(modifiedIdea));
   } catch (err) {
     yield put(ideasError(err));
   }
@@ -58,8 +59,8 @@ export function* deleteIdeaSaga(action) {
     const deleted = yield call(request, requestURL, {
       method: 'DELETE',
     });
+    deleted.id = action.id; // hack
     yield put(deleteIdeaDone(deleted));
-    yield put(getIdeas()); // to be removed with real API
   } catch (err) {
     yield put(ideasError(err));
   }
@@ -85,7 +86,6 @@ export function* postIdeaSaga() {
       }),
     });
     yield put(postIdeaDone(newIdea));
-    // yield put(getIdeas());
   } catch (err) {
     yield put(ideasError(err));
   }

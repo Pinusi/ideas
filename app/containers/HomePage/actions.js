@@ -25,6 +25,7 @@ import {
   PUT_IDEA_DONE,
   DELETE_IDEA,
   DELETE_IDEA_DONE,
+  FILTER_IDEAS,
 } from './constants';
 
 
@@ -90,9 +91,10 @@ export function putIdea(payload) {
  *
  * @return {object}    An action object with a type of PUT_IDEA_DONE
  */
-export function putIdeaDone() {
+export function putIdeaDone(updated) {
   return {
     type: PUT_IDEA_DONE,
+    updated,
   };
 }
 
@@ -150,5 +152,19 @@ export function postIdeaDone(newIdea) {
   return {
     type: POST_IDEA_DONE,
     newIdea,
+  };
+}
+
+/**
+ * Post an idea
+ *
+ * @param  {filter} string of the filter label
+ *
+ * @return {object}    An action object with a type of POST_IDEA
+ */
+export function filterIdeas(filter) {
+  return {
+    type: FILTER_IDEAS,
+    filter,
   };
 }

@@ -18,3 +18,4 @@ export const PUT_IDEA = 'ideas/Home/PUT_IDEA';
 export const PUT_IDEA_DONE = 'ideas/Home/PUT_IDEA_DONE';
 export const DELETE_IDEA = 'ideas/Home/DELETE_IDEA';
 export const DELETE_IDEA_DONE = 'ideas/Home/DELETE_IDEA_DONE';
+export const FILTER_IDEAS = 'ideas/Home/FILTER_IDEAS';

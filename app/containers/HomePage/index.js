@@ -19,14 +19,15 @@ import faPlusCircle from '@fortawesome/fontawesome-free-solid/faPlusCircle';
 
 import NotificationCenter from 'components/NotificationCenter';
 import IdeaItem from 'components/IdeaItem';
+import Filter from 'components/Filter';
 import Wrapper from './Wrapper';
 import Ideas from './Ideas';
 import Add from './Add';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
-import { makeSelectIdeas, makeSelectLoading, makeSelectError, makeSelectAction } from './selectors';
-import { getIdeas, putIdea, deleteIdea, postIdea } from './actions';
+import { makeSelectIdeas, makeSelectLoading, makeSelectError, makeSelectAction, makeSelectFilter } from './selectors';
+import { getIdeas, putIdea, deleteIdea, postIdea, filterIdeas } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -37,6 +38,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     this.saveIdea = this.saveIdea.bind(this);
     this.deleteIdea = this.deleteIdea.bind(this);
     this.addIdea = this.addIdea.bind(this);
+    this.filterIdeas = this.filterIdeas.bind(this);
   }
 
   componentDidMount() {
@@ -63,8 +65,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     onAddIdea();
   }
 
+  filterIdeas(filter) {
+    const { onFilterIdeas } = this.props;
+    // console.log(filter)
+    onFilterIdeas(filter);
+  }
+
   render() {
-    const { ideas, action, loading } = this.props;
+    const { ideas, action, loading, filter } = this.props;
 
     return (
       <Wrapper>
@@ -72,6 +80,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <FontAwesomeIcon className="icon" icon={faPlusCircle} />
         </Add>
         <NotificationCenter loadingData={loading} action={action} />
+        <Filter
+          filterSelected={filter}
+          onFilter={this.filterIdeas}
+          filterOptions={{
+            title: 'Title',
+            created_date: 'Creation Date',
+          }}
+        />
         <Ideas>
           {
             ideas.map((idea) =>
@@ -91,10 +107,12 @@ HomePage.propTypes = {
   ]),
   action: PropTypes.string,
   loading: PropTypes.bool,
+  filter: PropTypes.string,
   onGetIdeas: PropTypes.func,
   onSaveIdea: PropTypes.func,
   onDeleteIdea: PropTypes.func,
   onAddIdea: PropTypes.func,
+  onFilterIdeas: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -103,6 +121,7 @@ export function mapDispatchToProps(dispatch) {
     onSaveIdea: (payload) => dispatch(putIdea(payload)),
     onDeleteIdea: (id) => dispatch(deleteIdea(id)),
     onAddIdea: () => dispatch(postIdea()),
+    onFilterIdeas: (filter) => dispatch(filterIdeas(filter)),
   };
 }
 
@@ -111,6 +130,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
   action: makeSelectAction(),
+  filter: makeSelectFilter(),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
