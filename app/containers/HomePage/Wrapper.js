@@ -5,7 +5,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
-  padding-top: 40px;
 `;
 
 export default Wrapper;

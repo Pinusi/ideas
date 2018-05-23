@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Ideas = styled.div`
-  padding-top: 50px;
+  padding-top: 90px;
   padding-left: 10px;
   padding-bottom: 10px;
   justify-content: space-around;

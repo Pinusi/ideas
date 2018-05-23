@@ -73,26 +73,27 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render() {
     const { ideas, action, loading, filter } = this.props;
-
+    // console.log('ideas', ideas)
     return (
       <Wrapper>
         <Add onClick={this.addIdea}>
           <FontAwesomeIcon className="icon" icon={faPlusCircle} />
         </Add>
         <NotificationCenter loadingData={loading} action={action} />
-        <Filter
-          filterSelected={filter}
-          onFilter={this.filterIdeas}
-          filterOptions={{
-            title: 'Title',
-            created_date: 'Creation Date',
-          }}
-        />
         <Ideas>
-          {
-            ideas.map((idea) =>
-              <IdeaItem key={`idea-${idea.id}`} idea={idea} action={action} saveIdea={this.saveIdea} deleteIdea={this.deleteIdea} />
-            )
+          <Filter
+            filterSelected={filter}
+            onFilter={this.filterIdeas}
+            filterOptions={{
+              title: 'Title',
+              created_date: 'Creation Date',
+            }}
+          />
+          {ideas &&
+            ideas.toJS().map((idea, index) => {
+              // console.log('idea', idea, index)
+              return <IdeaItem key={`idea-${idea.id}`} idea={idea} action={action} saveIdea={this.saveIdea} deleteIdea={this.deleteIdea} />
+            })
           }
         </Ideas>
       </Wrapper>

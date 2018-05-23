@@ -3,15 +3,16 @@
  */
 
 import { createStore, applyMiddleware, compose } from 'redux';
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
 import { loadState, saveState } from './localStorage';
+import homeReducer from './containers/HomePage/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 const persistedState = loadState();
-
+// console.log(persistedState)
 export default function configureStore(initialState = persistedState, history) {
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
@@ -38,11 +39,11 @@ export default function configureStore(initialState = persistedState, history) {
       })
       : compose;
   /* eslint-enable */
-
+  // console.log(initialState)
   const store = createStore(
-    createReducer(),
-    fromJS(initialState),
-    // fromJS(persistedState),
+    createReducer({ home: homeReducer }),
+    // fromJS(initialState),
+    fromJS(persistedState),
     composeEnhancers(...enhancers),
   );
 
@@ -51,7 +52,9 @@ export default function configureStore(initialState = persistedState, history) {
   });
   // Extensions
   store.runSaga = sagaMiddleware.run;
-  store.injectedReducers = {}; // Reducer registry
+  store.injectedReducers = {
+    home: homeReducer,
+  }; // Reducer registry
   store.injectedSagas = {}; // Saga registry
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
